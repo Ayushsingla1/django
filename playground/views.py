@@ -25,4 +25,7 @@ def say_hello(request):
     # query = Product.objects.values('id', 'title', 'collection__title')
 
     # query = Product.objects.filter(id__in = ProductOrderMapping.objects.values('products_id').distinct()).order_by('title')
+
+    # select_related(1) ->  (1 to 1 mapping like thing) or  (n to 1 mapping)
+    # prefetch_related(n) -> 1 to n mapping
     return render(request, "index.html")
