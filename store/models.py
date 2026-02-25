@@ -5,10 +5,18 @@ from django.db import models
 
 
 class Collection(models.Model):
+
     title = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.title
+    
+    class Meta:
+        ordering = ['title']
 
 
 class Product(models.Model):
+
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField()
@@ -17,8 +25,15 @@ class Product(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     collections = models.ForeignKey(Collection, on_delete=models.PROTECT)
 
+    def __str__(self) -> str:
+        return self.title
+
+    class Meta:
+        ordering = ['title']
+
 
 class Customer(models.Model):
+
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.CharField(unique=True)
@@ -32,13 +47,18 @@ class Customer(models.Model):
 
 
 class Order(models.Model):
+
     ORDER_PAYMENT_STATUS = [("P", "Pending"), ("C", "Completed"), ("F", "Failed")]
     placed_at = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(max_length=1, choices=ORDER_PAYMENT_STATUS)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return str(self.placed_at)
+
 
 class Address(models.Model):
+
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     zip = models.CharField(max_length=255)
