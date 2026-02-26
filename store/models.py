@@ -85,7 +85,15 @@ class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class CartItems(models.Model):
+class CartItem(models.Model):
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
+
+
+class Review(models.Model):
+    
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    name = models.CharField(max_length=255)
+    review = models.TextField(max_length=255)
+    date = models.DateField(auto_now_add=True)
