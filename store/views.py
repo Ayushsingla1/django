@@ -9,7 +9,9 @@ from rest_framework.views import APIView
 # from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.pagination import PageNumberPagination
+from .pagination import DefaultPagination
 # from django.db.models import FieldDoesNotExist
 # Create your views here.
 
@@ -17,8 +19,11 @@ class ProductViewSet(ModelViewSet):
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['collections_id']
+    search_fields = ['title','description']
+    ordering_fields = ['price','last_updated']
+    pagination_class = DefaultPagination
 
     # def get_queryset(self):
     #     queryset = Product.objects.all()
